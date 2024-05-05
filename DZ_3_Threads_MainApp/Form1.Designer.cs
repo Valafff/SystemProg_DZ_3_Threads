@@ -42,6 +42,7 @@
 			bt_FibStop = new Button();
 			bt_PrimePause = new Button();
 			bt_FibPause = new Button();
+			bt_Close = new Button();
 			((System.ComponentModel.ISupportInitialize)numericUpDownStart).BeginInit();
 			((System.ComponentModel.ISupportInitialize)numericUpDownEnd).BeginInit();
 			((System.ComponentModel.ISupportInitialize)numericUpDownFib).BeginInit();
@@ -97,7 +98,7 @@
 			// 
 			richTextBoxPrimeNumbers.Location = new Point(12, 98);
 			richTextBoxPrimeNumbers.Name = "richTextBoxPrimeNumbers";
-			richTextBoxPrimeNumbers.Size = new Size(382, 318);
+			richTextBoxPrimeNumbers.Size = new Size(382, 288);
 			richTextBoxPrimeNumbers.TabIndex = 5;
 			richTextBoxPrimeNumbers.Text = "";
 			// 
@@ -123,7 +124,7 @@
 			// 
 			richTextBoxFibbonacci.Location = new Point(409, 65);
 			richTextBoxFibbonacci.Name = "richTextBoxFibbonacci";
-			richTextBoxFibbonacci.Size = new Size(411, 351);
+			richTextBoxFibbonacci.Size = new Size(411, 321);
 			richTextBoxFibbonacci.TabIndex = 8;
 			richTextBoxFibbonacci.Text = "";
 			// 
@@ -177,11 +178,22 @@
 			bt_FibPause.UseVisualStyleBackColor = true;
 			bt_FibPause.Click += bt_FibPause_Click;
 			// 
+			// bt_Close
+			// 
+			bt_Close.Location = new Point(745, 392);
+			bt_Close.Name = "bt_Close";
+			bt_Close.Size = new Size(75, 23);
+			bt_Close.TabIndex = 14;
+			bt_Close.Text = "Выход";
+			bt_Close.UseVisualStyleBackColor = true;
+			bt_Close.Click += bt_Close_Click;
+			// 
 			// Form1
 			// 
 			AutoScaleDimensions = new SizeF(7F, 15F);
 			AutoScaleMode = AutoScaleMode.Font;
 			ClientSize = new Size(835, 423);
+			Controls.Add(bt_Close);
 			Controls.Add(bt_FibPause);
 			Controls.Add(bt_PrimePause);
 			Controls.Add(bt_FibStop);
@@ -221,5 +233,6 @@
 		private Button bt_FibStop;
 		private Button bt_PrimePause;
 		private Button bt_FibPause;
+		private Button bt_Close;
 	}
 }

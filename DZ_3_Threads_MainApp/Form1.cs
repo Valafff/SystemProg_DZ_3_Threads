@@ -56,7 +56,6 @@ namespace DZ_3_Threads_MainApp
 					}
 				}
 			}
-			Console.WriteLine(_number);
 			return true;
 		}
 
@@ -71,8 +70,11 @@ namespace DZ_3_Threads_MainApp
 				if (IsPrimeNumber(startValue))
 				{
 					result.Add(startValue);
+					Console.WriteLine(startValue);
 				}
 				startValue++;
+				//Искуственное замедление расчета последовательности
+				Thread.Sleep(50);
 			}
 			return result;
 		}
@@ -131,7 +133,7 @@ namespace DZ_3_Threads_MainApp
 				count--;
 				Console.WriteLine(t);
 				//Искуственное замедление расчета последовательности
-				Thread.Sleep(100);
+				Thread.Sleep(50);
 			}
 			return TempFibbNumbers;
 		}
@@ -148,7 +150,7 @@ namespace DZ_3_Threads_MainApp
 			{
 				// Обновляем текст на richTextBoxPrimeNumbers
 				richTextBoxFibbonacci.Clear();
-				foreach (uint number in result)
+				foreach (UInt128 number in result)
 				{
 					richTextBoxFibbonacci.AppendText($"{number} ");
 				}
@@ -162,11 +164,8 @@ namespace DZ_3_Threads_MainApp
 			List<UInt128> res = GetFibbArray();
 			UpdateUIFib(res);
 		}
+
 		//Ряд Фибоначчи
-
-
-
-
 		private async void bt_Start_Click(object sender, EventArgs e)
 		{
 			startValue = (uint)numericUpDownStart.Value;
@@ -174,15 +173,20 @@ namespace DZ_3_Threads_MainApp
 			PrimeNumbers.Clear();
 			bt_Start.Enabled = false;
 
-			Task primeTask = Task.Run(() =>
-			{
-				DoWorkPrime();
-			});
+			//Task primeTask = Task.Run(() =>
+			//{
+			//	DoWorkPrime();
+			//});
+			Thread primeTask = new Thread(DoWorkPrime);
+			primeTask.IsBackground = true;
+			primeTask.Start();
 		}
 
 		private void button_FibStart_Click(object sender, EventArgs e)
 		{
+			bt_FibStart.Enabled = false;
 			Thread fibThread = new Thread(DoWorkFib);
+			fibThread.IsBackground = true;
 			fibThread.Start();
 		}
 
@@ -232,6 +236,11 @@ namespace DZ_3_Threads_MainApp
 				bt_FibPause.Text = "Пауза";
 				bt_FibStop.Enabled = true;
 			}
+		}
+
+		private void bt_Close_Click(object sender, EventArgs e)
+		{
+			Close();
 		}
 	}
 }
