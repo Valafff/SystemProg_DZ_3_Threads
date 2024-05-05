@@ -6,11 +6,16 @@ namespace DZ_3_Threads_MainApp
 {
 	public partial class Form1 : Form
 	{
-		public CancellationTokenSource PrimeCancellationTokenSource;
-		public CancellationToken PrimeCancellationToken;
+		//public CancellationTokenSource PrimeCancellationTokenSource;
+		//public CancellationToken PrimeCancellationToken;
+
+		ManualResetEvent ManualResetEventPrime = new ManualResetEvent(true);
+		ManualResetEvent ManualResetEventFib = new ManualResetEvent(true);
 
 		bool PrimeFlag = false;
 		bool FibFlag = false;
+		bool PrimePauseFlag = false;
+		bool FibPauseFlag = false;
 
 		uint startValue, endValue;
 		List<uint> PrimeNumbers = new List<uint>();
@@ -61,6 +66,8 @@ namespace DZ_3_Threads_MainApp
 			List<uint> result = new List<uint>();
 			while (startValue <= endValue && !PrimeFlag)
 			{
+				//Приостанавливает выполнение расчета
+				ManualResetEventPrime.WaitOne();
 				if (IsPrimeNumber(startValue))
 				{
 					result.Add(startValue);
@@ -116,13 +123,16 @@ namespace DZ_3_Threads_MainApp
 
 			while (count > 2 && !FibFlag)
 			{
+				ManualResetEventFib.WaitOne();
 				UInt128 num1 = TempFibbNumbers[TempFibbNumbers.Count - 2];
 				UInt128 num2 = TempFibbNumbers[TempFibbNumbers.Count - 1];
 				var t = GetThirdNumber(num1, num2);
 				TempFibbNumbers.Add(t);
 				count--;
-                Console.WriteLine(t);
-            }
+				Console.WriteLine(t);
+				//Искуственное замедление расчета последовательности
+				Thread.Sleep(100);
+			}
 			return TempFibbNumbers;
 		}
 
@@ -159,10 +169,6 @@ namespace DZ_3_Threads_MainApp
 
 		private async void bt_Start_Click(object sender, EventArgs e)
 		{
-			var cancellationTokenSource = new CancellationTokenSource();
-			var cancellationToken = cancellationTokenSource.Token;
-			PrimeCancellationTokenSource = cancellationTokenSource;
-			PrimeCancellationToken = cancellationToken;
 			startValue = (uint)numericUpDownStart.Value;
 			endValue = (uint)numericUpDownEnd.Value;
 			PrimeNumbers.Clear();
@@ -171,16 +177,7 @@ namespace DZ_3_Threads_MainApp
 			Task primeTask = Task.Run(() =>
 			{
 				DoWorkPrime();
-				//if (PrimeCancellationToken.IsCancellationRequested)
-				//{
-				//	// Выход из задачи
-				//	return;
-				//}
-				PrimeCancellationTokenSource.Token.ThrowIfCancellationRequested();
-
-			}, PrimeCancellationTokenSource.Token);
-
-			//PrimeCancellationTokenSource.Cancel();
+			});
 		}
 
 		private void button_FibStart_Click(object sender, EventArgs e)
@@ -198,6 +195,43 @@ namespace DZ_3_Threads_MainApp
 		private void bt_FibStop_Click(object sender, EventArgs e)
 		{
 			FibFlag = true;
+		}
+
+		private void bt_PrimePause_Click(object sender, EventArgs e)
+		{
+			if (!PrimePauseFlag)
+			{
+				ManualResetEventPrime.Reset();
+				PrimePauseFlag = true;
+				bt_PrimePause.Text = "Продолжить";
+				bt_PrimeStop.Enabled = false;
+			}
+			else
+			{
+				ManualResetEventPrime.Set();
+				PrimePauseFlag = false;
+				bt_PrimePause.Text = "Пауза";
+				bt_PrimeStop.Enabled = true;
+			}
+
+		}
+
+		private void bt_FibPause_Click(object sender, EventArgs e)
+		{
+			if (!FibPauseFlag)
+			{
+				ManualResetEventFib.Reset();
+				FibPauseFlag = true;
+				bt_FibPause.Text = "Продолжить";
+				bt_FibStop.Enabled = false;
+			}
+			else
+			{
+				ManualResetEventFib.Set();
+				FibPauseFlag = false;
+				bt_FibPause.Text = "Пауза";
+				bt_FibStop.Enabled = true;
+			}
 		}
 	}
 }

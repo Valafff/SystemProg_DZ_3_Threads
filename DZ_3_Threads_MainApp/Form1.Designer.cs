@@ -40,6 +40,8 @@
 			bt_FibStart = new Button();
 			bt_PrimeStop = new Button();
 			bt_FibStop = new Button();
+			bt_PrimePause = new Button();
+			bt_FibPause = new Button();
 			((System.ComponentModel.ISupportInitialize)numericUpDownStart).BeginInit();
 			((System.ComponentModel.ISupportInitialize)numericUpDownEnd).BeginInit();
 			((System.ComponentModel.ISupportInitialize)numericUpDownFib).BeginInit();
@@ -59,9 +61,9 @@
 			label2.AutoSize = true;
 			label2.Location = new Point(127, 14);
 			label2.Name = "label2";
-			label2.Size = new Size(108, 15);
+			label2.Size = new Size(236, 15);
 			label2.TabIndex = 1;
-			label2.Text = "Верхний диапазон";
+			label2.Text = "Верхний диапазон поиска простых чисел";
 			// 
 			// numericUpDownStart
 			// 
@@ -113,7 +115,7 @@
 			numericUpDownFib.Location = new Point(409, 36);
 			numericUpDownFib.Maximum = new decimal(new int[] { 1000, 0, 0, 0 });
 			numericUpDownFib.Name = "numericUpDownFib";
-			numericUpDownFib.Size = new Size(120, 23);
+			numericUpDownFib.Size = new Size(54, 23);
 			numericUpDownFib.TabIndex = 7;
 			numericUpDownFib.Value = new decimal(new int[] { 1000, 0, 0, 0 });
 			// 
@@ -127,9 +129,9 @@
 			// 
 			// bt_FibStart
 			// 
-			bt_FibStart.Location = new Point(535, 36);
+			bt_FibStart.Location = new Point(469, 36);
 			bt_FibStart.Name = "bt_FibStart";
-			bt_FibStart.Size = new Size(139, 23);
+			bt_FibStart.Size = new Size(93, 23);
 			bt_FibStart.TabIndex = 9;
 			bt_FibStart.Text = "Старт";
 			bt_FibStart.UseVisualStyleBackColor = true;
@@ -147,19 +149,41 @@
 			// 
 			// bt_FibStop
 			// 
-			bt_FibStop.Location = new Point(680, 36);
+			bt_FibStop.Location = new Point(568, 36);
 			bt_FibStop.Name = "bt_FibStop";
-			bt_FibStop.Size = new Size(140, 23);
+			bt_FibStop.Size = new Size(131, 23);
 			bt_FibStop.TabIndex = 11;
 			bt_FibStop.Text = "Завершить расчет";
 			bt_FibStop.UseVisualStyleBackColor = true;
 			bt_FibStop.Click += bt_FibStop_Click;
 			// 
+			// bt_PrimePause
+			// 
+			bt_PrimePause.Location = new Point(269, 69);
+			bt_PrimePause.Name = "bt_PrimePause";
+			bt_PrimePause.Size = new Size(125, 23);
+			bt_PrimePause.TabIndex = 12;
+			bt_PrimePause.Text = "Пауза";
+			bt_PrimePause.UseVisualStyleBackColor = true;
+			bt_PrimePause.Click += bt_PrimePause_Click;
+			// 
+			// bt_FibPause
+			// 
+			bt_FibPause.Location = new Point(705, 36);
+			bt_FibPause.Name = "bt_FibPause";
+			bt_FibPause.Size = new Size(115, 23);
+			bt_FibPause.TabIndex = 13;
+			bt_FibPause.Text = "Пауза";
+			bt_FibPause.UseVisualStyleBackColor = true;
+			bt_FibPause.Click += bt_FibPause_Click;
+			// 
 			// Form1
 			// 
 			AutoScaleDimensions = new SizeF(7F, 15F);
 			AutoScaleMode = AutoScaleMode.Font;
-			ClientSize = new Size(1260, 423);
+			ClientSize = new Size(835, 423);
+			Controls.Add(bt_FibPause);
+			Controls.Add(bt_PrimePause);
 			Controls.Add(bt_FibStop);
 			Controls.Add(bt_PrimeStop);
 			Controls.Add(bt_FibStart);
@@ -173,7 +197,7 @@
 			Controls.Add(label2);
 			Controls.Add(label1);
 			Name = "Form1";
-			Text = "Form1";
+			Text = "Расчет простых чисел и чисел Фибоначчи в разных потоках";
 			((System.ComponentModel.ISupportInitialize)numericUpDownStart).EndInit();
 			((System.ComponentModel.ISupportInitialize)numericUpDownEnd).EndInit();
 			((System.ComponentModel.ISupportInitialize)numericUpDownFib).EndInit();
@@ -195,5 +219,7 @@
 		private Button bt_FibStart;
 		private Button bt_PrimeStop;
 		private Button bt_FibStop;
+		private Button bt_PrimePause;
+		private Button bt_FibPause;
 	}
 }
