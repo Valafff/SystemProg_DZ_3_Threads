@@ -43,6 +43,7 @@
 			bt_PrimePause = new Button();
 			bt_FibPause = new Button();
 			bt_Close = new Button();
+			checkBox_Busy = new CheckBox();
 			((System.ComponentModel.ISupportInitialize)numericUpDownStart).BeginInit();
 			((System.ComponentModel.ISupportInitialize)numericUpDownEnd).BeginInit();
 			((System.ComponentModel.ISupportInitialize)numericUpDownFib).BeginInit();
@@ -118,7 +119,7 @@
 			numericUpDownFib.Name = "numericUpDownFib";
 			numericUpDownFib.Size = new Size(54, 23);
 			numericUpDownFib.TabIndex = 7;
-			numericUpDownFib.Value = new decimal(new int[] { 1000, 0, 0, 0 });
+			numericUpDownFib.Value = new decimal(new int[] { 100, 0, 0, 0 });
 			// 
 			// richTextBoxFibbonacci
 			// 
@@ -188,11 +189,22 @@
 			bt_Close.UseVisualStyleBackColor = true;
 			bt_Close.Click += bt_Close_Click;
 			// 
+			// checkBox_Busy
+			// 
+			checkBox_Busy.AutoSize = true;
+			checkBox_Busy.Location = new Point(12, 395);
+			checkBox_Busy.Name = "checkBox_Busy";
+			checkBox_Busy.Size = new Size(301, 19);
+			checkBox_Busy.TabIndex = 15;
+			checkBox_Busy.Text = "Отключить искусственную задержку вычислений";
+			checkBox_Busy.UseVisualStyleBackColor = true;
+			// 
 			// Form1
 			// 
 			AutoScaleDimensions = new SizeF(7F, 15F);
 			AutoScaleMode = AutoScaleMode.Font;
 			ClientSize = new Size(835, 423);
+			Controls.Add(checkBox_Busy);
 			Controls.Add(bt_Close);
 			Controls.Add(bt_FibPause);
 			Controls.Add(bt_PrimePause);
@@ -234,5 +246,6 @@
 		private Button bt_PrimePause;
 		private Button bt_FibPause;
 		private Button bt_Close;
+		private CheckBox checkBox_Busy;
 	}
 }

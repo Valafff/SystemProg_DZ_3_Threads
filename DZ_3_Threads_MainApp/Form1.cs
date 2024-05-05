@@ -74,7 +74,7 @@ namespace DZ_3_Threads_MainApp
 				}
 				startValue++;
 				//Искуственное замедление расчета последовательности
-				Thread.Sleep(50);
+				if (!checkBox_Busy.Checked) { Thread.Sleep(50); }
 			}
 			return result;
 		}
@@ -113,7 +113,19 @@ namespace DZ_3_Threads_MainApp
 		//Определение последующего члена
 		UInt128 GetThirdNumber(UInt128 _number1, UInt128 _number2)
 		{
-			return _number1 + _number2;
+			try
+			{
+				checked
+				{
+					return _number1 + _number2;
+				}
+			}
+			catch (Exception)
+			{
+				MessageBox.Show($"Арифметическое переполнение на {FibbNumbers.Count}м члене!");
+				return 0;
+			}
+
 		}
 
 		List<UInt128> GetFibbArray()
@@ -129,11 +141,18 @@ namespace DZ_3_Threads_MainApp
 				UInt128 num1 = TempFibbNumbers[TempFibbNumbers.Count - 2];
 				UInt128 num2 = TempFibbNumbers[TempFibbNumbers.Count - 1];
 				var t = GetThirdNumber(num1, num2);
-				TempFibbNumbers.Add(t);
-				count--;
-				Console.WriteLine(t);
-				//Искуственное замедление расчета последовательности
-				Thread.Sleep(50);
+				if (t != 0)
+				{
+					TempFibbNumbers.Add(t);
+					FibbNumbers = TempFibbNumbers;
+					count--;
+					Console.WriteLine(t);
+					//Искуственное замедление расчета последовательности
+					if (!checkBox_Busy.Checked) { Thread.Sleep(50); }
+				}
+				else { return TempFibbNumbers; }
+
+
 			}
 			return TempFibbNumbers;
 		}
